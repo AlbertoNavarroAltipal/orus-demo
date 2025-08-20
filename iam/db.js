@@ -14,6 +14,8 @@ function getPool() {
       password: process.env.PGPASSWORD,
       ssl,
       max: Number(process.env.PGPOOL_MAX || 5),
+      // Fail fast if connection cannot be established
+      connectionTimeoutMillis: 5000,
       idleTimeoutMillis: 30000,
     });
   }
