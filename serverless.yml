@@ -19,7 +19,7 @@ provider:
     PGHOST: ${env:PGHOST, 'localhost'}
     PGPORT: ${env:PGPORT, '5432'}
     PGDATABASE: ${env:PGDATABASE, 'postgres'}
-    PGUSER: ${env:PGUSER, 'postgres'}
+  PGUSER: ${env:PGUSER, 'postgres'}
   PGPASSWORD: ${env:PGPASSWORD, 'postgres'}
   PGSSL: ${env:PGSSL, 'true'}
   PGPOOL_MAX: ${env:PGPOOL_MAX, '5'}
