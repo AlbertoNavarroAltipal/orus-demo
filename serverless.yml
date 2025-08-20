@@ -3,12 +3,26 @@ org: engynex
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: orus-demo
 
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs20.x
+  httpApi:
+    cors: true
   # Uncomment to easily set up a custom domain. Read the docs for more details:
   # https://www.serverless.com/framework/docs/providers/aws/guide/domains
   # domain: api.example.com
+  environment:
+    PGHOST: ${env:PGHOST, 'localhost'}
+    PGPORT: ${env:PGPORT, '5432'}
+    PGDATABASE: ${env:PGDATABASE, 'postgres'}
+    PGUSER: ${env:PGUSER, 'postgres'}
+  PGPASSWORD: ${env:PGPASSWORD, 'postgres'}
+  PGSSL: ${env:PGSSL, 'true'}
+  PGPOOL_MAX: ${env:PGPOOL_MAX, '5'}
 
 functions:
   hello:
@@ -17,3 +31,118 @@ functions:
       - httpApi:
           path: /
           method: get
+  # =========================
+  # IAM - Permissions
+  # =========================
+  iam-permissions-list:
+    handler: iam/permissions/list.handler
+    events:
+      - httpApi:
+          path: /iam/permissions
+          method: get
+  iam-permissions-get:
+    handler: iam/permissions/get.handler
+    events:
+      - httpApi:
+          path: /iam/permissions/{code}
+          method: get
+  iam-permissions-create:
+    handler: iam/permissions/create.handler
+    events:
+      - httpApi:
+          path: /iam/permissions
+          method: post
+  iam-permissions-update:
+    handler: iam/permissions/update.handler
+    events:
+      - httpApi:
+          path: /iam/permissions/{code}
+          method: put
+  iam-permissions-delete:
+    handler: iam/permissions/delete.handler
+    events:
+      - httpApi:
+          path: /iam/permissions/{code}
+          method: delete
+
+  # =========================
+  # IAM - Roles
+  # =========================
+  iam-roles-list:
+    handler: iam/roles/list.handler
+    events:
+      - httpApi:
+          path: /iam/roles
+          method: get
+  iam-roles-get:
+    handler: iam/roles/get.handler
+    events:
+      - httpApi:
+          path: /iam/roles/{code}
+          method: get
+  iam-roles-create:
+    handler: iam/roles/create.handler
+    events:
+      - httpApi:
+          path: /iam/roles
+          method: post
+  iam-roles-update:
+    handler: iam/roles/update.handler
+    events:
+      - httpApi:
+          path: /iam/roles/{code}
+          method: put
+  iam-roles-delete:
+    handler: iam/roles/delete.handler
+    events:
+      - httpApi:
+          path: /iam/roles/{code}
+          method: delete
+
+  # Role <-> Permission mappings
+  iam-roles-permissions-list:
+    handler: iam/roles/permissions-list.handler
+    events:
+      - httpApi:
+          path: /iam/roles/{code}/permissions
+          method: get
+  iam-roles-permissions-attach:
+    handler: iam/roles/permissions-attach.handler
+    events:
+      - httpApi:
+          path: /iam/roles/{code}/permissions/{permissionCode}
+          method: post
+  iam-roles-permissions-detach:
+    handler: iam/roles/permissions-detach.handler
+    events:
+      - httpApi:
+          path: /iam/roles/{code}/permissions/{permissionCode}
+          method: delete
+
+  # =========================
+  # IAM - Users
+  # =========================
+  iam-users-assign-role:
+    handler: iam/users/assign-role.handler
+    events:
+      - httpApi:
+          path: /iam/users/{email}/roles/{roleCode}
+          method: post
+  iam-users-remove-role:
+    handler: iam/users/remove-role.handler
+    events:
+      - httpApi:
+          path: /iam/users/{email}/roles/{roleCode}
+          method: delete
+  iam-users-assign-permission:
+    handler: iam/users/assign-permission.handler
+    events:
+      - httpApi:
+          path: /iam/users/{email}/permissions/{permissionCode}
+          method: post
+  iam-users-remove-permission:
+    handler: iam/users/remove-permission.handler
+    events:
+      - httpApi:
+          path: /iam/users/{email}/permissions/{permissionCode}
+          method: delete
