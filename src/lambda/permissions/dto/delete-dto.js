@@ -1,19 +1,19 @@
-const { IsString } = require("class-validator");
-const { plainToInstance } = require("class-transformer");
-
-class PermissionDeleteDto {
-  @IsString()
-  code;
-}
-
 function validateDeleteDto(params) {
-  const dto = plainToInstance(PermissionDeleteDto, params);
-  const { validateSync } = require("class-validator");
-  const errors = validateSync(dto, { whitelist: true });
+  const errors = [];
+  const dto = {};
+
+  if (params.code === undefined) {
+    errors.push("El campo 'code' es obligatorio.");
+  } else if (typeof params.code !== "string") {
+    errors.push("El campo 'code' debe ser texto.");
+  } else {
+    dto.code = params.code;
+  }
+
   if (errors.length > 0) {
-    throw new Error("Validation failed: " + JSON.stringify(errors));
+    throw new Error(errors.join(" "));
   }
   return dto;
 }
 
-module.exports = { PermissionDeleteDto, validateDeleteDto };
+module.exports = { validateDeleteDto };

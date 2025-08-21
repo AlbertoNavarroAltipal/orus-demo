@@ -1,6 +1,6 @@
 const { withClient } = require("../../config/db");
 const { noContent, badRequest, notFound } = require("../../config/http");
-const { validateDeleteDto } = require("./delete-dto");
+const { validateDeleteDto } = require("./dto/delete-dto");
 
 exports.handler = async (event) => {
   const { code } = event.pathParameters || {};
