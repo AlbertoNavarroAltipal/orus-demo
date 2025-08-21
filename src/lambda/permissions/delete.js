@@ -1,9 +1,15 @@
-const { withClient } = require("../db");
-const { noContent, badRequest, notFound } = require("../http");
+const { withClient } = require("../../config/db");
+const { noContent, badRequest, notFound } = require("../../config/http");
+const { validateDeleteDto } = require("./delete-dto");
 
 exports.handler = async (event) => {
   const { code } = event.pathParameters || {};
-  if (!code) return badRequest("Missing path parameter: code");
+  // Validación con class-validator y class-transformer
+  try {
+    validateDeleteDto({ code });
+  } catch (err) {
+    return badRequest(err.message);
+  }
   const result = await withClient(async (c) => {
     const res = await c.query(
       `DELETE FROM orus_iam.permission WHERE code = $1`,

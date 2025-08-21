@@ -1,10 +1,17 @@
-const { withClient } = require("../db");
-const { ok, badRequest, notFound, parseJson } = require("../http");
+const { withClient } = require("../../config/db");
+const { ok, badRequest, notFound, parseJson } = require("../../config/http");
+const { validateUpdateDto } = require("./dto/update-dto");
 
 exports.handler = async (event) => {
   const { code } = event.pathParameters || {};
   if (!code) return badRequest("Missing path parameter: code");
   const body = parseJson(event);
+  // Validación con class-validator y class-transformer
+  try {
+    validateUpdateDto(body);
+  } catch (err) {
+    return badRequest(err.message);
+  }
   const fields = [];
   const values = [];
   let i = 1;

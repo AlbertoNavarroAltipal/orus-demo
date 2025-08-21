@@ -1,6 +1,7 @@
-const { withClient } = require("../db");
-const { ok } = require("../http");
+const { withClient } = require("../../config/db");
+const { ok } = require("../../config/http");
 const crypto = require("crypto");
+const { validateQueryDto } = require("./dto/query-dto");
 
 /**
  * Respuesta estandar solicitada:
@@ -14,6 +15,16 @@ const crypto = require("crypto");
 exports.handler = async (event = {}) => {
   const start = Date.now();
   const qs = event.queryStringParameters || {};
+
+  // Validación de parámetros con class-validator y class-transformer
+  try {
+    validateQueryDto(qs);
+  } catch (err) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: err.message }),
+    };
+  }
 
   // Parse paginación
   const page = Math.max(1, parseInt(qs.page, 10) || 1);

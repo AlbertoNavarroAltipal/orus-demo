@@ -1,5 +1,5 @@
-const { withClient } = require("../db");
-const { ok, badRequest, notFound } = require("../http");
+const { withClient } = require("../../config/db");
+const { ok, badRequest, notFound } = require("../../config/http");
 
 exports.handler = async (event) => {
   const { code } = event.pathParameters || {};

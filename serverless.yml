@@ -35,31 +35,31 @@ functions:
   # IAM - Permissions
   # =========================
   iam-permissions-list:
-    handler: iam/permissions/list.handler
+    handler: src/lambda/permissions/list.handler
     events:
       - httpApi:
           path: /iam/permissions
           method: get
   iam-permissions-get:
-    handler: iam/permissions/get.handler
+    handler: src/lambda/permissions/get.handler
     events:
       - httpApi:
           path: /iam/permissions/{code}
           method: get
   iam-permissions-create:
-    handler: iam/permissions/create.handler
+    handler: src/lambda/permissions/create.handler
     events:
       - httpApi:
           path: /iam/permissions
           method: post
   iam-permissions-update:
-    handler: iam/permissions/update.handler
+    handler: src/lambda/permissions/update.handler
     events:
       - httpApi:
           path: /iam/permissions/{code}
           method: put
   iam-permissions-delete:
-    handler: iam/permissions/delete.handler
+    handler: src/lambda/permissions/delete.handler
     events:
       - httpApi:
           path: /iam/permissions/{code}
@@ -69,31 +69,31 @@ functions:
   # IAM - Roles
   # =========================
   iam-roles-list:
-    handler: iam/roles/list.handler
+    handler: src/lambda/roles/list.handler
     events:
       - httpApi:
           path: /iam/roles
           method: get
   iam-roles-get:
-    handler: iam/roles/get.handler
+    handler: src/lambda/roles/get.handler
     events:
       - httpApi:
           path: /iam/roles/{code}
           method: get
   iam-roles-create:
-    handler: iam/roles/create.handler
+    handler: src/lambda/roles/create.handler
     events:
       - httpApi:
           path: /iam/roles
           method: post
   iam-roles-update:
-    handler: iam/roles/update.handler
+    handler: src/lambda/roles/update.handler
     events:
       - httpApi:
           path: /iam/roles/{code}
           method: put
   iam-roles-delete:
-    handler: iam/roles/delete.handler
+    handler: src/lambda/roles/delete.handler
     events:
       - httpApi:
           path: /iam/roles/{code}
@@ -101,19 +101,19 @@ functions:
 
   # Role <-> Permission mappings
   iam-roles-permissions-list:
-    handler: iam/roles/permissions-list.handler
+    handler: src/lambda/roles/permissions-list.handler
     events:
       - httpApi:
           path: /iam/roles/{code}/permissions
           method: get
   iam-roles-permissions-attach:
-    handler: iam/roles/permissions-attach.handler
+    handler: src/lambda/roles/permissions-attach.handler
     events:
       - httpApi:
           path: /iam/roles/{code}/permissions/{permissionCode}
           method: post
   iam-roles-permissions-detach:
-    handler: iam/roles/permissions-detach.handler
+    handler: src/lambda/roles/permissions-detach.handler
     events:
       - httpApi:
           path: /iam/roles/{code}/permissions/{permissionCode}
@@ -123,25 +123,25 @@ functions:
   # IAM - Users
   # =========================
   iam-users-assign-role:
-    handler: iam/users/assign-role.handler
+    handler: src/lambda/users/assign-role.handler
     events:
       - httpApi:
           path: /iam/users/{email}/roles/{roleCode}
           method: post
   iam-users-remove-role:
-    handler: iam/users/remove-role.handler
+    handler: src/lambda/users/remove-role.handler
     events:
       - httpApi:
           path: /iam/users/{email}/roles/{roleCode}
           method: delete
   iam-users-assign-permission:
-    handler: iam/users/assign-permission.handler
+    handler: src/lambda/users/assign-permission.handler
     events:
       - httpApi:
           path: /iam/users/{email}/permissions/{permissionCode}
           method: post
   iam-users-remove-permission:
-    handler: iam/users/remove-permission.handler
+    handler: src/lambda/users/remove-permission.handler
     events:
       - httpApi:
           path: /iam/users/{email}/permissions/{permissionCode}
