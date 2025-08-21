@@ -27,6 +27,7 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    description: "Lambda de ejemplo para pruebas."
     events:
       - httpApi:
           path: /
@@ -36,30 +37,35 @@ functions:
   # =========================
   iam-permissions-list:
     handler: src/lambda/permissions/list.handler
+    description: "Lista todos los permisos disponibles."
     events:
       - httpApi:
           path: /iam/permissions
           method: get
   iam-permissions-get:
     handler: src/lambda/permissions/get.handler
+    description: "Obtiene la información de un permiso específico."
     events:
       - httpApi:
           path: /iam/permissions/{code}
           method: get
   iam-permissions-create:
     handler: src/lambda/permissions/create.handler
+    description: "Crea un nuevo permiso."
     events:
       - httpApi:
           path: /iam/permissions
           method: post
   iam-permissions-update:
     handler: src/lambda/permissions/update.handler
+    description: "Actualiza los datos de un permiso existente."
     events:
       - httpApi:
           path: /iam/permissions/{code}
           method: put
   iam-permissions-delete:
     handler: src/lambda/permissions/delete.handler
+    description: "Elimina un permiso por código."
     events:
       - httpApi:
           path: /iam/permissions/{code}
@@ -70,30 +76,35 @@ functions:
   # =========================
   iam-roles-list:
     handler: src/lambda/roles/list.handler
+    description: "Lista todos los roles disponibles."
     events:
       - httpApi:
           path: /iam/roles
           method: get
   iam-roles-get:
     handler: src/lambda/roles/get.handler
+    description: "Obtiene la información de un rol específico."
     events:
       - httpApi:
           path: /iam/roles/{code}
           method: get
   iam-roles-create:
     handler: src/lambda/roles/create.handler
+    description: "Crea un nuevo rol."
     events:
       - httpApi:
           path: /iam/roles
           method: post
   iam-roles-update:
     handler: src/lambda/roles/update.handler
+    description: "Actualiza los datos de un rol existente."
     events:
       - httpApi:
           path: /iam/roles/{code}
           method: put
   iam-roles-delete:
     handler: src/lambda/roles/delete.handler
+    description: "Elimina un rol por código."
     events:
       - httpApi:
           path: /iam/roles/{code}
@@ -102,18 +113,21 @@ functions:
   # Role <-> Permission mappings
   iam-roles-permissions-list:
     handler: src/lambda/roles/permissions-list.handler
+    description: "Lista los permisos asociados a un rol."
     events:
       - httpApi:
           path: /iam/roles/{code}/permissions
           method: get
   iam-roles-permissions-attach:
     handler: src/lambda/roles/permissions-attach.handler
+    description: "Asocia un permiso a un rol."
     events:
       - httpApi:
           path: /iam/roles/{code}/permissions/{permissionCode}
           method: post
   iam-roles-permissions-detach:
     handler: src/lambda/roles/permissions-detach.handler
+    description: "Desasocia un permiso de un rol."
     events:
       - httpApi:
           path: /iam/roles/{code}/permissions/{permissionCode}
@@ -124,24 +138,28 @@ functions:
   # =========================
   iam-users-assign-role:
     handler: src/lambda/users/assign-role.handler
+    description: "Asigna un rol a un usuario."
     events:
       - httpApi:
           path: /iam/users/{email}/roles/{roleCode}
           method: post
   iam-users-remove-role:
     handler: src/lambda/users/remove-role.handler
+    description: "Remueve un rol de un usuario."
     events:
       - httpApi:
           path: /iam/users/{email}/roles/{roleCode}
           method: delete
   iam-users-assign-permission:
     handler: src/lambda/users/assign-permission.handler
+    description: "Asigna un permiso a un usuario."
     events:
       - httpApi:
           path: /iam/users/{email}/permissions/{permissionCode}
           method: post
   iam-users-remove-permission:
     handler: src/lambda/users/remove-permission.handler
+    description: "Remueve un permiso de un usuario."
     events:
       - httpApi:
           path: /iam/users/{email}/permissions/{permissionCode}
